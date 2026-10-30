@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remora</title>
+    <link rel="stylesheet" href="/src/tokens.css" />
+    <style>
+      /* Painted before the JS bundle loads; React replaces #root's contents on mount. */
+      html, body { margin: 0; height: 100%; background: var(--bg-window); }
+      .boot { display: flex; height: 100vh; }
+      .boot-side { width: 220px; padding: 52px 12px 12px; box-sizing: border-box; background: var(--bg-sidebar); border-right: 1px solid var(--border); }
+      .boot-main { flex: 1; padding: 64px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+      .boot i { display: block; border-radius: 4px; background: linear-gradient(90deg, var(--surface-sunken) 0%, var(--hover-wash) 50%, var(--surface-sunken) 100%);
+        background-size: 200% 100%; animation: boot-shimmer 1.6s linear infinite; }
+      .boot-side i { height: 14px; margin: 10px 8px; }
+      .boot-card { height: 72px; border-radius: var(--radius-card); background: var(--surface); border: 1px solid var(--border); padding: 16px; box-sizing: border-box; }
+      @keyframes boot-shimmer { to { background-position: -200% 0; } }
+      @media (prefers-reduced-motion: reduce) { .boot i { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="boot" aria-busy="true" aria-label="Loading Remora">
+        <div class="boot-side"><i style="width:60%"></i><i style="width:45%"></i><i style="width:70%"></i><i style="width:50%"></i><i style="width:65%"></i></div>
+        <div class="boot-main">
+          <i style="width:180px;height:20px"></i>
+          <div class="boot-card"><i style="width:40%;height:12px"></i><i style="width:65%;height:10px;margin-top:10px"></i></div>
+          <div class="boot-card"><i style="width:50%;height:12px"></i><i style="width:55%;height:10px;margin-top:10px"></i></div>
+          <div class="boot-card"><i style="width:35%;height:12px"></i><i style="width:60%;height:10px;margin-top:10px"></i></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "$comment": "Mirror of the role tokens in src/tokens.css that other tools (docs, design files) read. tokens.css is what the app uses; keep both in sync.",
+  "palette": {
+    "abyss": "#0B1E2D", "pelagic": "#1F6F8B", "sharkskin": "#8A97A3", "stripe": "#2B2F33", "stripe-edge": "#E8EEF2",
+    "shallows": "#5BB8E6", "lagoon": "#7FD0F0", "open-sea": "#2E9BD6",
+    "brass": "#B8893A", "silver-belly": "#C9CED3", "chesapeake": "#4E5B3C", "sonar": "#39D98A",
+    "coral": "#E5533D", "kelp": "#3E9C6B", "sand": "#D9A441"
+  },
+  "roles": {
+    "light": {
+      "wave-bar": "open-sea",
+      "wave-ripple": "open-sea"
+    },
+    "dark": {
+      "wave-bar": "sonar",
+      "wave-ripple": "shallows"
+    }
+  }
+}

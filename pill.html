@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Croaker</title>
+  </head>
+  <body>
+    <canvas id="sonar" aria-hidden="true"></canvas>
+    <div id="pill" class="pill" role="status" aria-live="polite">
+      <span id="dot" class="state" aria-hidden="true"></span>
+      <svg class="check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" /></svg>
+      <canvas id="wave" aria-hidden="true"></canvas>
+      <span id="text" class="text">Listening…</span>
+      <span id="chip" class="chip"></span>
+    </div>
+    <script type="module" src="/src/pill.ts"></script>
+  </body>
+</html>

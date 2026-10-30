@@ -1,0 +1,126 @@
+/* Remora design tokens. Raw palette values live only here (and config/theme.json); components read roles. */
+@font-face {
+  font-family: "Inter Variable";
+  src: local("Inter Variable"), local("Inter");
+  font-display: swap;
+}
+
+:root {
+  /* Palette (mode-stable) */
+  --abyss:#0B1E2D; --pelagic:#1F6F8B; --sharkskin:#8A97A3; --stripe:#2B2F33; --stripe-edge:#E8EEF2;
+  --shallows:#5BB8E6; --lagoon:#7FD0F0; --open-sea:#2E9BD6;
+  --brass:#B8893A; --silver-belly:#C9CED3; --chesapeake:#4E5B3C; --sonar:#39D98A;
+  --coral:#E5533D; --kelp:#3E9C6B; --sand:#D9A441;
+  --mac-close:#FF5F57; --mac-min:#FEBC2E; --mac-max:#28C840; --white:#FFFFFF;
+
+  /* Light roles */
+  --bg-window:#F5F8FA; --bg-sidebar:rgba(232,238,242,.72);
+  --surface:#FFFFFF; --surface-raised:#FFFFFF; --surface-sunken:#EEF3F6;
+  --border:rgba(43,47,51,.12); --border-strong:rgba(43,47,51,.22);
+  --text-primary:#2B2F33; --text-secondary:#5B6873; --text-muted:#6F7C88;
+
+  --brand:var(--shallows);
+  --accent:var(--pelagic);
+  --accent-hover:#1A6079; --accent-pressed:#165266; --on-accent:#FFFFFF;
+  --accent-text:#17596F;
+  --control-on:var(--open-sea);
+  --selection-wash:rgba(46,155,214,.12);
+  --hover-wash:rgba(43,47,51,.05);
+  --focus-ring:0 0 0 3px rgba(46,155,214,.40);
+
+  --notes-accent:var(--pelagic);
+  --croaker-accent:var(--brass); --croaker-accent-text:#7A5A22; --croaker-chip-bg:#F3E6CC;
+  /* Croaker pill: glass = translucent tint + top sheen + bright hairline (no blur; the desktop can't be sampled) */
+  --pill-bg:rgba(232,238,242,.52); --pill-sheen:rgba(255,255,255,.55); --pill-border:rgba(255,255,255,.75);
+  --pill-edge:rgba(43,47,51,.14); --pill-text:var(--text-primary); --pill-text-glow:rgba(255,255,255,.7);
+  --waveform:var(--open-sea);
+  /* waves rise past the glass over any desktop, so light mode uses the mid blue (pelagic is too dark on dark apps) */
+  --wave-bar:var(--open-sea); --wave-ripple:var(--open-sea);
+  --pill-chip-bg:rgba(184,137,58,.16); --pill-chip-border:rgba(184,137,58,.32); --pill-chip-text:#6E5020;
+
+  --record:var(--coral); --success:var(--kelp); --success-text:#2D7A52; --success-wash:rgba(62,156,107,.14);
+  --warning:var(--sand); --warning-text:#8A6416; --warning-wash:rgba(217,164,65,.14); --warning-border:rgba(217,164,65,.38);
+  --danger:var(--coral); --danger-text:#B23A28; --danger-wash:rgba(229,83,61,.10); --on-danger:#FFFFFF;
+
+  --knob:#FFFFFF; --knob-shadow:0 1px 2px rgba(11,30,45,.28), 0 0 0 .5px rgba(11,30,45,.08);
+  --shadow-control:0 1px 1px rgba(11,30,45,.06);
+  --shadow-segment:0 1px 2px rgba(11,30,45,.14), 0 0 0 .5px rgba(11,30,45,.06);
+  --shadow-popover:0 8px 24px rgba(11,30,45,.14), 0 1px 3px rgba(11,30,45,.10);
+  --shadow-window:0 20px 50px rgba(11,30,45,.22);
+  --backdrop:rgba(11,30,45,.20);
+
+  /* Croaker bar colour per target app (brand colours; monochrome brands follow the text colour) */
+  --app-teams:#6264A7; --app-slack:#611F69; --app-claude:#D97757; --app-chatgpt:#10A37F;
+  --app-outlook:#0F6CBD; --app-word:#2B579A; --app-excel:#217346; --app-powerpoint:#C43E1C;
+  --app-vscode:#007ACC; --app-chrome:#4285F4; --app-edge:#0C59A4; --app-whatsapp:#25D366;
+  --app-discord:#5865F2; --app-gmail:#EA4335; --app-figma:#A259FF; --app-zoom:#0B5CFF;
+  --app-cursor:var(--text-primary); --app-notion:var(--text-primary); --app-github:var(--text-primary);
+  --app-terminal:var(--kelp);
+
+  /* speaker slots */
+  --spk-1:#2E9BD6; --spk-2:#E0664F; --spk-3:#3E9C6B; --spk-4:#C29A3A;
+  --spk-5:#8E6CC9; --spk-6:#1FA3A3; --spk-7:#C2528A; --spk-8:#6B7A88;
+
+  /* Shape and spacing */
+  --radius-window:10px; --radius-card:10px; --radius-control:6px; --radius-menu:8px; --radius-pill:999px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-6:24px; --space-8:32px;
+
+  /* Motion */
+  --dur-press:80ms; --dur-fast:140ms; --dur-base:220ms; --dur-slow:320ms; --dur-calm:480ms;
+  --ease-out:cubic-bezier(.22,1,.36,1); --ease-in-out:cubic-bezier(.65,0,.35,1);
+  --travel-sm:4px; --travel-md:8px;
+
+  /* Type */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter Variable", "Segoe UI Variable Text", "Segoe UI Variable", sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  --fs-xs:11px; --fs-sm:13px; --fs-md:15px; --fs-lg:17px; --fs-xl:22px;
+
+  /* Legacy aliases */
+  --accent-wash:var(--selection-wash);
+  --search-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238A97A3' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='7' cy='7' r='4.5'/%3E%3Cpath d='M10.5 10.5L14 14'/%3E%3C/svg%3E");
+  --r-window:var(--radius-window); --r-card:var(--radius-card); --r-control:var(--radius-control);
+  --chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 16'%3E%3Cpath d='M2 6l3-3 3 3M2 10l3 3 3-3' fill='none' stroke='%235B6873' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg-window:#0B1E2D; --bg-sidebar:rgba(11,30,45,.60);
+    --surface:#12293A; --surface-raised:#183447; --surface-sunken:#081723;
+    --border:rgba(232,238,242,.10); --border-strong:rgba(232,238,242,.20);
+    --text-primary:#E8EEF2; --text-secondary:#A9B6C1; --text-muted:#8695A2;
+
+    --accent:var(--shallows); --accent-hover:#74C3EA; --accent-pressed:#4AA6D4; --on-accent:#0B1E2D;
+    --accent-text:var(--lagoon);
+    --control-on:var(--open-sea);
+    --selection-wash:rgba(91,184,230,.16); --hover-wash:rgba(232,238,242,.06);
+    --focus-ring:0 0 0 3px rgba(91,184,230,.45);
+
+    --notes-accent:var(--shallows);
+    --croaker-accent:#D2A458; --croaker-accent-text:#E9C98A; --croaker-chip-bg:#3A2E17;
+    --app-slack:#E01E5A;
+    --pill-bg:rgba(11,30,45,.50); --pill-sheen:rgba(255,255,255,.12); --pill-border:rgba(255,255,255,.18);
+    --pill-edge:rgba(0,0,0,.30); --pill-text:var(--stripe-edge); --pill-text-glow:rgba(0,0,0,.35);
+    --waveform:var(--shallows);
+    --wave-bar:var(--sonar); --wave-ripple:var(--accent);
+    --pill-chip-bg:rgba(210,164,88,.18); --pill-chip-border:rgba(210,164,88,.34); --pill-chip-text:#E9C98A;
+    --record:#F0705C; --success:#5BC08A; --success-text:#5BC08A; --success-wash:rgba(91,192,138,.14);
+    --warning:#E6B65A; --warning-text:#E6B65A; --warning-wash:rgba(230,182,90,.12); --warning-border:rgba(230,182,90,.32);
+    --danger:#F0705C; --danger-text:#F0705C; --danger-wash:rgba(240,112,92,.12); --on-danger:#0B1E2D;
+
+    --knob:#E8EEF2; --knob-shadow:0 1px 2px rgba(0,0,0,.5);
+    --shadow-control:none;
+    --shadow-segment:0 1px 2px rgba(0,0,0,.4), 0 0 0 .5px rgba(232,238,242,.10);
+    --shadow-popover:0 8px 24px rgba(0,0,0,.45), 0 0 0 1px rgba(232,238,242,.08);
+    --shadow-window:0 20px 50px rgba(0,0,0,.55);
+    --backdrop:rgba(0,0,0,.30);
+
+    --spk-1:#5BB8E6; --spk-2:#EE826F; --spk-3:#5BC08A; --spk-4:#D2A458;
+    --spk-5:#A68BDB; --spk-6:#3CC2C2; --spk-7:#D673A3; --spk-8:#8C9AA7;
+    --chevron:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 16'%3E%3Cpath d='M2 6l3-3 3 3M2 10l3 3 3-3' fill='none' stroke='%23A9B6C1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast:0ms; --dur-base:80ms; --dur-slow:80ms; --dur-calm:80ms; --travel-sm:0px; --travel-md:0px; }
+}
