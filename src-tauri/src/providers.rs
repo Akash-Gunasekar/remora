@@ -70,7 +70,7 @@ pub fn default_routing() -> Routing {
     HashMap::from([
         ("stt.dictation".into(), r(&["local:whistle", "groq:whisper-large-v3-turbo", "openai:gpt-4o-mini-transcribe"], 15_000)),
         ("stt.meeting".into(), r(&["local:whistle", "groq:whisper-large-v3-turbo", "openai:gpt-4o-mini-transcribe"], 60_000)),
-        ("dictation".into(), r(&["claude:claude-haiku-5-5", "ollama-local:llama3.2", "rules"], 2_000)),
+        ("dictation".into(), r(&["claude:claude-haiku-5-5", "ollama-local:llama3.2", "rules"], 4_000)),
         ("meeting".into(), r(&["claude:claude-sonnet-5-5", "ollama-local:llama3.2"], 120_000)),
     ])
 }
@@ -100,7 +100,9 @@ pub fn load(data: &Data) -> (ProvidersFile, Routing) {
         let _ = write_json(&rp, &routing);
     }
     for (k, v) in defaults {
-        routing.entry(k).or_insert(v);
+        // Defaults are a floor: older builds saved a 2 s dictation timeout that Sonnet's first token often misses.
+        let r = routing.entry(k).or_insert_with(|| v.clone());
+        r.timeout_ms = r.timeout_ms.max(v.timeout_ms);
     }
     (read_json(&pp), routing)
 }
@@ -329,6 +331,8 @@ pub async fn chat(data: &Data, task: &str, system: &str, user: &str, max_tokens:
     let (pf, routing) = load(data);
     let route = routing.get(task).ok_or(format!("no route for {task}"))?;
     let local_only = force_local || pf.policies.local_only_mode;
+    // Longer input means a longer prompt to read before the first token; 20 ms per word on top of the route's budget.
+    let wait = Duration::from_millis(route.timeout_ms + 20 * user.split_whitespace().count() as u64);
     let mut errs = vec![];
     for target in &route.chain {
         let (pid, model) = split_target(target);
@@ -339,7 +343,7 @@ pub async fn chat(data: &Data, task: &str, system: &str, user: &str, max_tokens:
             continue;
         }
         let t0 = std::time::Instant::now();
-        match chat_once(p, model, system, user, max_tokens, Duration::from_millis(route.timeout_ms)).await {
+        match chat_once(p, model, system, user, max_tokens, wait).await {
             Ok((text, i, o)) => {
                 log_usage(data, task, target, i, o, t0.elapsed().as_millis());
                 return Ok(ChatOut { text: text.trim().to_string(), via: target.clone() });

@@ -154,9 +154,16 @@ pub fn has_speech(x: &[f32]) -> bool {
 
 /// End of a finished phrase in `x[from..]`: at least 2 s of audio that ends in ~350 ms of silence.
 /// Cutting there lets dictation transcribe phrase by phrase while the user is still talking.
+/// Speech with no pause is cut at its quietest moment once 20 s pile up, so it never waits for key release.
 pub fn phrase_end(x: &[f32], from: usize) -> Option<usize> {
     let tail = RATE as usize * 35 / 100;
-    (x.len().saturating_sub(from) >= 2 * RATE as usize && rms(&x[x.len() - tail..]) < 0.008).then_some(x.len())
+    let n = x.len().saturating_sub(from);
+    if n >= 2 * RATE as usize && rms(&x[x.len() - tail..]) < 0.008 { return Some(x.len()); }
+    if n < 20 * RATE as usize { return None; }
+    let f = RATE as usize / 10;
+    (x.len() - 4 * RATE as usize..x.len() - f).step_by(f / 2)
+        .min_by(|&a, &b| rms(&x[a..a + f]).total_cmp(&rms(&x[b..b + f])))
+        .map(|a| a + f / 2)
 }
 
 fn spec() -> hound::WavSpec {
@@ -211,5 +218,11 @@ mod tests {
         x.extend(vec![0.0; RATE as usize / 2]);
         assert_eq!(phrase_end(&x, 0), Some(x.len()));
         assert_eq!(phrase_end(&x, x.len() - RATE as usize), None); // too little new audio
+        // 25 s without a pause: cut at the quiet dip at 23 s, not at the end.
+        let r = RATE as usize;
+        let mut y = vec![0.3f32; 25 * r];
+        y[23 * r..23 * r + r / 10].fill(0.0);
+        let cut = phrase_end(&y, 0).unwrap();
+        assert!((23 * r..=23 * r + r / 10).contains(&cut), "{cut}");
     }
 }
